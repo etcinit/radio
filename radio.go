@@ -57,6 +57,7 @@ func (r *Radio) powerup() {
 		for message := range r.antenna {
 			if _, ok := message.(Noise); ok {
 				r.live = false
+				r.Alienate()
 				break
 			}
 
@@ -88,6 +89,35 @@ func (r *Radio) Listen() (<-chan interface{}, uint) {
 	r.listeners[r.lastID] = listener
 
 	return listener, r.lastID
+}
+
+// Count returns the number of active listeners.
+func (r *Radio) Count() int {
+	return len(r.listeners)
+}
+
+// IsLive returns whether or not the radio is broadcasting.
+func (r *Radio) IsLive() bool {
+	return r.live
+}
+
+// WakeUp attempts to restart a radio that was taken offline.
+func (r *Radio) WakeUp() error {
+	if r.live {
+		return errors.New("This radio is already broadcasting")
+	}
+
+	r.antenna = make(chan interface{})
+	r.powerup()
+
+	return nil
+}
+
+// Alienate closes all listener channels attached to this radio.
+func (r *Radio) Alienate() {
+	for listener := range r.listeners {
+		r.Stop(listener)
+	}
 }
 
 // Call sends a message only to the specified listener.
