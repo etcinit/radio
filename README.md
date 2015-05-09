@@ -1,4 +1,4 @@
-# [radio](https://github.com/etcinit/radio)
+# [radio](https://github.com/etcinit/radio) [![GoDoc](https://godoc.org/github.com/etcinit/radio?status.svg)](https://godoc.org/github.com/etcinit/radio)
 
 Broadcast messages to multiple Go channels
 
@@ -16,11 +16,15 @@ import (
 func main() {
 	done := make(chan bool)
 
+    // First, we begin by creating a Radio object. Think of it as your own
+    // radio station.
 	r1 := radio.NewRadio()
 
+    // Now we add two listeners. We get both a channel and identifier for them.
 	ch1, id1 := r1.Listen()
 	ch2, id2 := r1.Listen()
 
+    // We make the listener do things on a separate goroutine.
 	go func() {
 		for message := range ch1 {
 			if content, ok := message.(string); ok {
@@ -31,6 +35,7 @@ func main() {
 		}
 	}()
 
+    // Same for the second one.
 	go func() {
 		for message := range ch2 {
 			if content, ok := message.(string); ok {
@@ -41,19 +46,27 @@ func main() {
 		}
 	}()
 
+    // We broadcast our first message.
 	r1.Broadcast("hello world")
 
+    // Just for this example, we make sure they actually got it.
 	<-done
 	<-done
+    // By this point, both listeners should have written to stdout.
 
+    // Listener 1 got bored, so we remove it.
 	r1.Stop(id1)
 
+    // Broadcast a second message.
 	r1.Broadcast("you are listening to radio 1 news")
 
+    // Just for this example, we make sure it actually got it.
 	<-done
 
+    // Listener 2 also got bored, so we also remove it.
 	r1.Stop(id2)
 
+    // Nothing happens if no one is listening. :(
 	r1.Broadcast("sadly, no one listens")
 }
 ```
