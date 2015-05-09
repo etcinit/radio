@@ -7,7 +7,8 @@ Broadcast messages to multiple Go channels
 ## Summary
 
 - Useful for broadcasting messages across your app
-- You could build a multi-threaded IM/logger server
+- You could build a multi-threaded IM/logger server with it
+(Emphasis on the _could_).
 - It does not block when broadcasting or if one of listeners hasn't read from
 a channel yet.
 
