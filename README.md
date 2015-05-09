@@ -4,6 +4,13 @@ Broadcast messages to multiple Go channels
 
 [![wercker status](https://app.wercker.com/status/a73f3aa6cee48c69c9737b1417927354/m "wercker status")](https://app.wercker.com/project/bykey/a73f3aa6cee48c69c9737b1417927354)
 
+## Summary
+
+- Useful for broadcasting messages across your app
+- You could build a multi-threaded IM/logger server
+- It does not block when broadcasting or if one of listeners hasn't read from
+a channel yet.
+
 ## Quick Example
 
 ```go
