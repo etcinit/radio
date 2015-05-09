@@ -2,6 +2,8 @@
 
 Broadcast messages to multiple Go channels
 
+[![wercker status](https://app.wercker.com/status/a73f3aa6cee48c69c9737b1417927354/m "wercker status")](https://app.wercker.com/project/bykey/a73f3aa6cee48c69c9737b1417927354)
+
 ## Quick Example
 
 ```go
