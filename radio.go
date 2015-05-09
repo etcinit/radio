@@ -24,7 +24,8 @@ type Radio struct {
 	live      bool
 }
 
-// Noise is a simple message that can be sent through a Radio
+// Noise is a simple message that we sent through a Radio will cause it to stop
+// broadcasting messages. Future messages will return errors.
 type Noise struct{}
 
 // NewRadio creates a new instance of a Radio.
